@@ -1,27 +1,3 @@
-/*
- * Copyright (c) 2003 Fabrice Bellard
- *
- * This file is part of FFmpeg.
- *
- * FFmpeg is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * FFmpeg is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with FFmpeg; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
-
-/**
- * @file
- * simple media player based on the FFmpeg libraries
- */
 
 #include "config.h"
 #include <inttypes.h>
@@ -3564,6 +3540,8 @@ static int opt_codec(void *optctx, const char *opt, const char *arg)
 
 static int dummy;
 
+//选项数组
+//x = 强行设置屏幕的宽度
 static const OptionDef options[] = {
     CMDUTILS_COMMON_OPTIONS
     { "x", HAS_ARG, { .func_arg = opt_width }, "force displayed width", "width" },
@@ -3662,18 +3640,18 @@ void show_help_default(const char *opt, const char *arg)
            );
 }
 
-/* Called from the main */
-int main(int argc, char **argv)
-{
+
+int main(int argc, char **argv){
     int flags;
     VideoState *is;
 
-    init_dynload();
+
 
     av_log_set_flags(AV_LOG_SKIP_REPEATED);
+	
     parse_loglevel(argc, argv, options);
 
-    /* register all codecs, demux and protocols */
+    
 #if CONFIG_AVDEVICE
     avdevice_register_all();
 #endif
@@ -3686,6 +3664,7 @@ int main(int argc, char **argv)
 
     show_banner(argc, argv, options);
 
+//解析全部输入选项
     parse_options(NULL, argc, argv, options, opt_input_file);
 
     if (!input_filename) {
@@ -3753,7 +3732,7 @@ int main(int argc, char **argv)
         }
     }
 
-    is = stream_open(input_filename, file_iformat);
+    is = stream_open(input_filename, file_iformat);//f选项指定 file_iformat
     if (!is) {
         av_log(NULL, AV_LOG_FATAL, "Failed to initialize VideoState!\n");
         do_exit(NULL);

@@ -61,10 +61,7 @@ void register_exit(void (*cb)(int ret));
  */
 void exit_program(int ret) av_noreturn;
 
-/**
- * Initialize dynamic library loading
- */
-void init_dynload(void);
+
 
 /**
  * Initialize the cmdutils option system, in particular
@@ -156,7 +153,7 @@ typedef struct SpecifierOpt {
 } SpecifierOpt;
 
 typedef struct OptionDef {
-    const char *name;
+    const char *name; //存储选项的名称。例如“i”，“f”
     int flags;
 #define HAS_ARG    0x0001
 #define OPT_BOOL   0x0002
@@ -185,7 +182,7 @@ typedef struct OptionDef {
         int (*func_arg)(void *, const char *, const char *);
         size_t off;
     } u;
-    const char *help;
+    const char *help;//说明信息
     const char *argname;
 } OptionDef;
 

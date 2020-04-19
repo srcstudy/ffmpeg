@@ -3570,7 +3570,7 @@ int main(int argc, char **argv)
     char *w_name = NULL, *w_args = NULL;
     int ret, i;
 
-    init_dynload();
+   
 
 #if HAVE_THREADS
     ret = pthread_mutex_init(&log_mutex, NULL);
