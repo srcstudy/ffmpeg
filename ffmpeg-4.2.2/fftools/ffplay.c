@@ -3052,6 +3052,7 @@ static VideoState *stream_open(const char *filename, AVInputFormat *iformat)
     is->xleft   = 0;
 
     /* start video display */
+	//frame_queue_init(FrameQueue *f, PacketQueue *pktq, int max_size, int keep_last)
     if (frame_queue_init(&is->pictq, &is->videoq, VIDEO_PICTURE_QUEUE_SIZE, 1) < 0)
         goto fail;
     if (frame_queue_init(&is->subpq, &is->subtitleq, SUBPICTURE_QUEUE_SIZE, 0) < 0)
@@ -3059,8 +3060,8 @@ static VideoState *stream_open(const char *filename, AVInputFormat *iformat)
     if (frame_queue_init(&is->sampq, &is->audioq, SAMPLE_QUEUE_SIZE, 1) < 0)
         goto fail;
 
-    if (packet_queue_init(&is->videoq) < 0 ||
-        packet_queue_init(&is->audioq) < 0 ||
+    if (packet_queue_init(&is->videoq)    < 0 ||
+        packet_queue_init(&is->audioq)    < 0 ||
         packet_queue_init(&is->subtitleq) < 0)
         goto fail;
 
@@ -3598,9 +3599,7 @@ static const OptionDef options[] = {
     { NULL, },
 };
 
-static void show_usage(void)
-{
-    av_log(NULL, AV_LOG_INFO, "Simple media player\n");
+static void show_usage(void){
     av_log(NULL, AV_LOG_INFO, "usage: %s [options] input_file\n", program_name);
     av_log(NULL, AV_LOG_INFO, "\n");
 }
@@ -3664,7 +3663,7 @@ int main(int argc, char **argv){
 
     show_banner(argc, argv, options);
 
-//解析全部输入选项
+	//解析全部输入选项
     parse_options(NULL, argc, argv, options, opt_input_file);
 
     if (!input_filename) {
@@ -3675,11 +3674,12 @@ int main(int argc, char **argv){
         exit(1);
     }
 
-    if (display_disable) {
+    if (display_disable) {//选项nodisp： disable graphical display 
         video_disable = 1;
     }
+	
     flags = SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER;
-    if (audio_disable)
+    if (audio_disable) // an选项
         flags &= ~SDL_INIT_AUDIO;
     else {
         /* Try to work around an occasional ALSA buffer underflow issue when the
@@ -3687,8 +3687,11 @@ int main(int argc, char **argv){
         if (!SDL_getenv("SDL_AUDIO_ALSA_SET_BUFFER_SIZE"))
             SDL_setenv("SDL_AUDIO_ALSA_SET_BUFFER_SIZE","1", 1);
     }
+
+	
     if (display_disable)
         flags &= ~SDL_INIT_VIDEO;
+	
     if (SDL_Init (flags)) {
         av_log(NULL, AV_LOG_FATAL, "Could not initialize SDL - %s\n", SDL_GetError());
         av_log(NULL, AV_LOG_FATAL, "(Did you set the DISPLAY variable?)\n");
