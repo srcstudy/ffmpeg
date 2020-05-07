@@ -1,5 +1,21 @@
 /*
- *public api
+ * copyright (c) 2006 Michael Niedermayer <michaelni@gmx.at>
+ *
+ * This file is part of FFmpeg.
+ *
+ * FFmpeg is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * FFmpeg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with FFmpeg; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /**
@@ -418,9 +434,7 @@ void av_fast_mallocz(void *ptr, unsigned int *size, size_t min_size);
  *
  * @note `ptr = NULL` is explicitly allowed.
  * @note It is recommended that you use av_freep() instead, to prevent leaving
- *       behind dangling pointers. 空悬指针?
-
- 建议用av_freep
+ *       behind dangling pointers.
  * @see av_freep()
  */
 void av_free(void *ptr);
@@ -430,7 +444,6 @@ void av_free(void *ptr);
  * or av_realloc() family, and set the pointer pointing to it to `NULL`.
  *
  * @code{.c}
- 
  * uint8_t *buf = av_malloc(16);
  * av_free(buf);
  * // buf now contains a dangling pointer to freed memory, and accidental
@@ -446,8 +459,6 @@ void av_free(void *ptr);
  * @param ptr Pointer to the pointer to the memory block which should be freed
  * @note `*ptr = NULL` is safe and leads to no action.
  * @see av_free()
-
- 参数是指向指针的指针
  */
 void av_freep(void *ptr);
 

@@ -1,3 +1,6 @@
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&  make -f Makefile.example clean && make -f Makefile.example
 
 读一个只有一帧的ts文件并生成yuv
+
+
+export PKG_CONFIG_PATH=/root/ffmpeg_build/lib/pkgconfig &&  make -f Makefile.example clean && make -f Makefile.example
