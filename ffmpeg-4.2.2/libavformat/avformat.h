@@ -1560,6 +1560,7 @@ typedef struct AVFormatContext {
      *
      * - demuxing: set by libavformat in avformat_open_input()
      * - muxing: may be set by the caller before avformat_write_header()
+     可以在avformat_write_header之前设置 AVFormatContext>metadata
      *
      * Freed by libavformat in avformat_free_context().
      */

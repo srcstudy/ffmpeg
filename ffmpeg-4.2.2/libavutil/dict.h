@@ -1,19 +1,5 @@
 /*
- * This file is part of FFmpeg.
- *
- * FFmpeg is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * FFmpeg is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with FFmpeg; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+public api
  */
 
 /**
@@ -66,16 +52,23 @@
  @endcode
  */
 
+//区分大小写 https://blog.csdn.net/u012098794/article/details/53045021
 #define AV_DICT_MATCH_CASE      1   /**< Only get an entry with exact-case key match. Only relevant in av_dict_get(). */
+//忽略后缀 
 #define AV_DICT_IGNORE_SUFFIX   2   /**< Return first entry in a dictionary whose first part corresponds to the search key,
-                                         ignoring the suffix of the found key string. Only relevant in av_dict_get(). */
+                                        ignoring the suffix of the found key string. Only relevant in av_dict_get(). */
+//不复制key
 #define AV_DICT_DONT_STRDUP_KEY 4   /**< Take ownership of a key that's been
                                          allocated with av_malloc() or another memory allocation function. */
+//不复制value
 #define AV_DICT_DONT_STRDUP_VAL 8   /**< Take ownership of a value that's been
                                          allocated with av_malloc() or another memory allocation function. */
+//在不支持相同key的情况下不能覆盖原有值  
 #define AV_DICT_DONT_OVERWRITE 16   ///< Don't overwrite existing entries.
+//不支持相同key的情况下 新的value连接在原来的后面
 #define AV_DICT_APPEND         32   /**< If the entry already exists, append to it.  Note that no
                                       delimiter is added, the strings are simply concatenated. */
+//允许存在相同的key  
 #define AV_DICT_MULTIKEY       64   /**< Allow to store several equal keys in the dictionary */
 
 typedef struct AVDictionaryEntry {
@@ -83,7 +76,7 @@ typedef struct AVDictionaryEntry {
     char *value;
 } AVDictionaryEntry;
 
-typedef struct AVDictionary AVDictionary;
+typedef struct AVDictionary AVDictionary; //定义在C中，可以不用暴露结构？
 
 /**
  * Get a dictionary entry with matching key.
@@ -177,6 +170,9 @@ void av_dict_free(AVDictionary **m);
 
 /**
  * Get dictionary entries as a string.
+ 将字典里面存储的Key-value整个返回，返回时key和value之间的分隔符由参数key_val_sep指定，比如你可以传‘=’
+ 然后返回的key-value对之间由参数pairs_sep分隔开。
+ 
  *
  * Create a string containing dictionary's entries.
  * Such string may be passed back to av_dict_parse_string().
@@ -184,9 +180,9 @@ void av_dict_free(AVDictionary **m);
  *
  * @param[in]  m             dictionary
  * @param[out] buffer        Pointer to buffer that will be allocated with string containg entries.
- *                           Buffer must be freed by the caller when is no longer needed.
- * @param[in]  key_val_sep   character used to separate key from value
- * @param[in]  pairs_sep     character used to separate two pairs from each other
+ *                           Buffer must be freed by the caller when is no longer needed.  这个需要 av_freep(&buffer);
+ * @param[in]  key_val_sep   character used to separate key from value  分隔Key和value
+ * @param[in]  pairs_sep     character used to separate two pairs from each other   分隔pairs
  * @return                   >= 0 on success, negative on error
  * @warning Separators cannot be neither '\\' nor '\0'. They also cannot be the same.
  */

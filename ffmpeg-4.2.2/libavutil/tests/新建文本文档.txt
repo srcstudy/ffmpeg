@@ -1,0 +1,2 @@
+export PKG_CONFIG_PATH=/root/ffmpeg_build/lib/pkgconfig && gcc dict.c -I/root/ffmpeg_build/include/ -L/root/ffmpeg_build/lib -lavformat -lavcodec \
+ -lavutil -lswscale -lm -lz -pthread -lva-drm -lva -lvdpau -lX11 -lm -lva -lswresample

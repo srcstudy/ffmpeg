@@ -1,0 +1,6 @@
+export PKG_CONFIG_PATH=/root/ffmpeg_build/lib/pkgconfig &&  make -f Makefile.example clean && make -f Makefile.example
+
+Êä³ömetadata
+
+
+AVDictionary Ê¹ÓÃ

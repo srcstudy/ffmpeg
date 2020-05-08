@@ -1,21 +1,5 @@
 /*
- * copyright (c) 2001 Fabrice Bellard
- *
- * This file is part of FFmpeg.
- *
- * FFmpeg is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * FFmpeg is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with FFmpeg; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+public api
  */
 
 #ifndef AVCODEC_AVCODEC_H
@@ -5353,6 +5337,11 @@ int av_parser_change(AVCodecParserContext *s,
                      const uint8_t *buf, int buf_size, int keyframe);
 void av_parser_close(AVCodecParserContext *s);
 
+
+
+
+
+
 /**
  * @}
  * @}
@@ -5378,6 +5367,9 @@ AVCodec *avcodec_find_encoder(enum AVCodecID id);
  * @return An encoder if one was found, NULL otherwise.
  */
 AVCodec *avcodec_find_encoder_by_name(const char *name);
+
+
+
 
 /**
  * Encode a frame of audio.
@@ -6169,7 +6161,8 @@ int av_lockmgr_register(int (*cb)(void **mutex, enum AVLockOp op));
 enum AVMediaType avcodec_get_type(enum AVCodecID codec_id);
 
 /**
- * Get the name of a codec.
+ * Get the name of a codec. 
+ 根据数字查名字
  * @return  a static string identifying the codec; never NULL
  */
 const char *avcodec_get_name(enum AVCodecID id);

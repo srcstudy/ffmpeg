@@ -1,0 +1,4 @@
+export PKG_CONFIG_PATH=/root/ffmpeg_build/lib/pkgconfig &&  make -f Makefile.example clean && make -f Makefile.example
+
+如何生成metadata示例
+
