@@ -16,6 +16,7 @@ vpath %.ptx  $(SRC_PATH)
 vpath %/fate_config.sh.template $(SRC_PATH)
 
 TESTTOOLS   = audiogen videogen rotozoom tiny_psnr tiny_ssim base64 audiomatch
+# generate texinfo manpages for avoptions
 HOSTPROGS  := $(TESTTOOLS:%=tests/%) doc/print_options
 
 # $(FFLIBS-yes) needs to be in linking order
@@ -94,6 +95,7 @@ endef
 $(foreach D,$(FFLIBS),$(eval $(call DOSUBDIR,lib$(D))))
 
 include $(SRC_PATH)/fftools/Makefile
+
 include $(SRC_PATH)/doc/Makefile
 include $(SRC_PATH)/doc/examples/Makefile
 

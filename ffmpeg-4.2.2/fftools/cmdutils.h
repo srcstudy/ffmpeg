@@ -155,10 +155,10 @@ typedef struct SpecifierOpt {
 typedef struct OptionDef {
     const char *name; //存储选项的名称。例如“i”，“f”
     int flags;
-#define HAS_ARG    0x0001
+#define HAS_ARG    0x0001   //包含选项值
 #define OPT_BOOL   0x0002
 #define OPT_EXPERT 0x0004
-#define OPT_STRING 0x0008
+#define OPT_STRING 0x0008   //选项值为字符串类型
 #define OPT_VIDEO  0x0010
 #define OPT_AUDIO  0x0020
 #define OPT_INT    0x0080
@@ -173,13 +173,13 @@ typedef struct OptionDef {
 #define OPT_SPEC   0x8000       /* option is to be stored in an array of SpecifierOpt.
                                    Implies OPT_OFFSET. Next element after the offset is
                                    an int containing element count in the array. */
-#define OPT_TIME  0x10000
+#define OPT_TIME  0x10000       //选项值为时间类型
 #define OPT_DOUBLE 0x20000
 #define OPT_INPUT  0x40000
 #define OPT_OUTPUT 0x80000
      union {
         void *dst_ptr;
-        int (*func_arg)(void *, const char *, const char *);
+        int (*func_arg)(void *, const char *, const char *);//该选项的处理函数。
         size_t off;
     } u;
     const char *help;//说明信息

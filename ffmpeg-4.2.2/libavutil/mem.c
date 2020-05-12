@@ -248,6 +248,7 @@ void *av_calloc(size_t nmemb, size_t size)
     return av_mallocz(nmemb * size);
 }
 
+//字符串拷贝函数
 char *av_strdup(const char *s)
 {
     char *ptr = NULL;

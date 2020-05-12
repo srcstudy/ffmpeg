@@ -14,10 +14,14 @@ COMPONENTS-$(CONFIG_AVFORMAT)   += ffmpeg-formats ffmpeg-protocols
 COMPONENTS-$(CONFIG_AVDEVICE)   += ffmpeg-devices
 COMPONENTS-$(CONFIG_AVFILTER)   += ffmpeg-filters
 
+#ffmpeg.1 ffmpeg-all.1 ffmpeg-codecs.1
 MANPAGES1   = $(AVPROGS-yes:%=doc/%.1)    $(AVPROGS-yes:%=doc/%-all.1)    $(COMPONENTS-yes:%=doc/%.1)
+# libavformat.3 
 MANPAGES3   = $(LIBRARIES-yes:%=doc/%.3)
 MANPAGES    = $(MANPAGES1) $(MANPAGES3)
+# ffmpeg.pod ffmpeg-devices.pod libavformat.pod
 PODPAGES    = $(AVPROGS-yes:%=doc/%.pod)  $(AVPROGS-yes:%=doc/%-all.pod)  $(COMPONENTS-yes:%=doc/%.pod)  $(LIBRARIES-yes:%=doc/%.pod)
+# 
 HTMLPAGES   = $(AVPROGS-yes:%=doc/%.html) $(AVPROGS-yes:%=doc/%-all.html) $(COMPONENTS-yes:%=doc/%.html) $(LIBRARIES-yes:%=doc/%.html) \
               doc/developer.html                                        \
               doc/faq.html                                              \
@@ -30,9 +34,11 @@ HTMLPAGES   = $(AVPROGS-yes:%=doc/%.html) $(AVPROGS-yes:%=doc/%-all.html) $(COMP
 
 TXTPAGES    = doc/fate.txt                                              \
 
-
+# 这个需要--enable-htmlpages
 DOCS-$(CONFIG_HTMLPAGES) += $(HTMLPAGES)
+#默认为1
 DOCS-$(CONFIG_PODPAGES)  += $(PODPAGES)
+#默认为1
 DOCS-$(CONFIG_MANPAGES)  += $(MANPAGES)
 DOCS-$(CONFIG_TXTPAGES)  += $(TXTPAGES)
 DOCS = $(DOCS-yes)
@@ -58,6 +64,9 @@ $(GENTEXI): TAG = GENTEXI
 $(GENTEXI): doc/avoptions_%.texi: doc/print_options$(HOSTEXESUF)
 	$(M)doc/print_options $* > $@
 
+
+	
+	
 doc/%.html: TAG = HTML
 doc/%-all.html: TAG = HTML
 
@@ -79,6 +88,8 @@ doc/%-all.html: doc/%.texi $(SRC_PATH)/doc/t2h.init $(GENTEXI)
 	$(M)texi2html -I doc -monolithic --D=config-all --init-file $(SRC_PATH)/doc/t2h.init --output $@ $<
 endif
 
+
+
 doc/%.pod: TAG = POD
 doc/%.pod: doc/%.texi $(SRC_PATH)/doc/texi2pod.pl $(GENTEXI)
 	$(Q)$(TEXIDEP)
@@ -89,14 +100,19 @@ doc/%-all.pod: doc/%.texi $(SRC_PATH)/doc/texi2pod.pl $(GENTEXI)
 	$(Q)$(TEXIDEP)
 	$(M)perl $(SRC_PATH)/doc/texi2pod.pl -Dconfig-all=yes -Idoc $< $@
 
+	
+	
+	
 doc/%.1 doc/%.3: TAG = MAN
 doc/%.1: doc/%.pod $(GENTEXI)
 	$(M)pod2man --section=1 --center=" " --release=" " --date=" " $< > $@
 doc/%.3: doc/%.pod $(GENTEXI)
 	$(M)pod2man --section=3 --center=" " --release=" " --date=" " $< > $@
 
+	
+	
 $(DOCS) doc/doxy/html: | doc/
-
+#instheaders
 DOXY_INPUT      = $(INSTHEADERS)
 DOXY_INPUT_DEPS = $(addprefix $(SRC_PATH)/, $(DOXY_INPUT)) ffbuild/config.mak
 

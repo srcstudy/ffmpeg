@@ -4144,8 +4144,9 @@ void avcodec_register_all(void);
 #endif
 
 /**
- * Allocate an AVCodecContext and set its fields to default values. The
- * resulting struct should be freed with avcodec_free_context().
+分配并设置默认值，记得free
+ * Allocate an AVCodecContext and set its fields to default values. 
+ The resulting struct should be freed with avcodec_free_context().
  *
  * @param codec if non-NULL, allocate private data and initialize defaults
  *              for the given codec. It is illegal to then call avcodec_open2()
@@ -4241,25 +4242,25 @@ void avcodec_parameters_free(AVCodecParameters **par);
 int avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src);
 
 /**
- * Fill the parameters struct based on the values from the supplied codec
- * context. Any allocated fields in par are freed and replaced with duplicates
+用codec填充par,只填充那些在codec中存在的值，跟下面的函数刚好相反
+ * Fill the parameters struct based on the values from the supplied codec context. 
+ 	Any allocated fields in par are freed and replaced with duplicates
  * of the corresponding fields in codec.
  *
  * @return >= 0 on success, a negative AVERROR code on failure
  */
-int avcodec_parameters_from_context(AVCodecParameters *par,
-                                    const AVCodecContext *codec);
+int avcodec_parameters_from_context(AVCodecParameters *par, const AVCodecContext *codec);
 
 /**
- * Fill the codec context based on the values from the supplied codec
- * parameters. Any allocated fields in codec that have a corresponding field in
- * par are freed and replaced with duplicates of the corresponding field in par.
+替换掉codec在par中存在的那些值，不存在的不会被修改
+ * Fill the codec context based on the values from the supplied codec parameters. 
+    Any allocated fields in codec that have a corresponding field in  par  
+ are freed and replaced with duplicates of the corresponding field in par.
  * Fields in codec that do not have a counterpart in par are not touched.
  *
  * @return >= 0 on success, a negative AVERROR code on failure.
  */
-int avcodec_parameters_to_context(AVCodecContext *codec,
-                                  const AVCodecParameters *par);
+int avcodec_parameters_to_context(AVCodecContext *codec, const AVCodecParameters *par);
 
 /**
  * Initialize the AVCodecContext to use the given AVCodec. Prior to using this
