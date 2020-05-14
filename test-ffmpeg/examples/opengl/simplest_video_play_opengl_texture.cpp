@@ -277,8 +277,7 @@ int main(int argc, char* argv[])
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(screen_w, screen_h);
     glutCreateWindow("Simplest Video Play OpenGL (Texture)");
-	printf("Lei Xiaohua\n");
-	printf("http://blog.csdn.net/leixiaohua1020\n");
+	
     printf("Version: %s\n", glGetString(GL_VERSION));
     GLenum l = glewInit();
 
